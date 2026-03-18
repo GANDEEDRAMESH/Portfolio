@@ -1375,35 +1375,3 @@ footer {
   .tl-metrics { flex-direction: column; gap: 0.75rem; }
   .about-stats { grid-template-columns: repeat(4, 1fr); gap: 0.5rem; }
 }
-.container {
-  padding: 0 clamp(1rem, 4vw, 3rem);
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.hero-name {
-  font-size: clamp(2.2rem, 6vw, 5rem);
-}
-
-#hero {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2rem;
-}
-
-.hero-photo {
-  width: clamp(180px, 40vw, 320px);
-  height: clamp(180px, 40vw, 320px);
-}
-
-.skills-grid,
-.projects-grid,
-.cert-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 1.5rem;
-}
-
-.about-text {
-  max-width: 65ch;
-}
