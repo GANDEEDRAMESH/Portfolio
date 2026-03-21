@@ -225,12 +225,17 @@
 
 
 /* ==============================
-   7. CONTACT FORM HANDLER
+   7. CONTACT FORM HANDLER — EmailJS Integration
    ============================== */
 (function initContactForm() {
   const form    = document.getElementById('contact-form');
   const success = document.getElementById('form-success');
   if (!form) return;
+
+  // Initialize EmailJS with your Public Key
+  // TODO: Replace 'YOUR_PUBLIC_KEY' with your actual EmailJS Public Key
+  // Get it from: https://dashboard.emailjs.com/admin/account
+  emailjs.init('YOUR_PUBLIC_KEY');
 
   form.addEventListener('submit', function (e) {
     e.preventDefault();
@@ -240,14 +245,31 @@
     btn.innerHTML = 'Sending…';
     btn.disabled = true;
 
-    // Simulate async send (replace with real API call)
-    setTimeout(() => {
-      btn.innerHTML = originalText;
-      btn.disabled  = false;
-      form.reset();
-      success.classList.add('show');
-      setTimeout(() => success.classList.remove('show'), 5000);
-    }, 1400);
+    // Collect form data
+    const templateParams = {
+      to_email: 'gandeedramesh.ramesh@gmail.com',
+      from_name: document.getElementById('cname').value,
+      from_email: document.getElementById('cemail').value,
+      phone: document.getElementById('cphone').value || 'Not provided',
+      message: document.getElementById('cmessage').value,
+    };
+
+    // Send email using EmailJS
+    emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams)
+      .then((response) => {
+        console.log('Email sent successfully!', response.status, response.text);
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+        form.reset();
+        success.classList.add('show');
+        setTimeout(() => success.classList.remove('show'), 5000);
+      })
+      .catch((error) => {
+        console.error('Failed to send email:', error);
+        alert('Sorry, failed to send message. Please try again or contact directly via email.');
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+      });
   });
 })();
 
